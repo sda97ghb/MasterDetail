@@ -13,53 +13,21 @@ Window {
 
     UsersViewModel {
         id: usersViewModel
-        onCurrentUserChanged: {
-            theLoader.item.model = currentUser
-        }
     }
 
-    ColumnLayout {
+    RowLayout {
         anchors.fill: parent
 
         UsersList {
-            Layout.fillWidth: true
-            Layout.preferredHeight: parent.height / 2
-            usersViewModel: usersViewModel
-        }
-
-        Component {
-            id: userView
-
-            Item {
-                id: root
-                property UserViewModel model: null
-
-                Rectangle {
-//                    anchors.fill: parent
-                    anchors.centerIn: parent
-                    width: 400
-                    height: 200
-
-                    GridLayout {
-                        columns: 2
-
-                        Text { Layout.preferredHeight: 40; Layout.preferredWidth: 100; text: "Firstname:" }
-                        Text { Layout.preferredHeight: 40; Layout.preferredWidth: 100; text: root.model.firstName }
-                        Text { Layout.preferredHeight: 40; Layout.preferredWidth: 100; text: "Lastname:" }
-                        Text { Layout.preferredHeight: 40; Layout.preferredWidth: 100; text: root.model.lastName }
-                        Text { Layout.preferredHeight: 40; Layout.preferredWidth: 100; text: "Age:" }
-                        Text { Layout.preferredHeight: 40; Layout.preferredWidth: 100; text: root.model.age }
-                    }
-                }
-            }
-        }
-
-        Loader {
-            id: theLoader
+            Layout.preferredWidth: 200
             Layout.fillHeight: true
-            sourceComponent: userView
+            model: usersViewModel
+        }
+
+        UserDetails {
             Layout.fillWidth: true
-            Layout.preferredHeight: parent.height / 2
+            Layout.fillHeight: true
+            model: usersViewModel.currentUser
         }
     }
 }

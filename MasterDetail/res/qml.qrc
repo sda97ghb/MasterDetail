@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>qml/main.qml</file>
         <file>qml/UsersList.qml</file>
+        <file>qml/UserDetails.qml</file>
     </qresource>
 </RCC>

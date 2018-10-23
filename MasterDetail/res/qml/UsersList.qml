@@ -5,7 +5,9 @@ import QtQuick.Layouts 1.3
 import MyTypes 1.0
 
 Item {
-    property UsersViewModel usersViewModel: null
+    id: root
+
+    property UsersViewModel model: null
 
     Component {
         id: userListHeader
@@ -88,7 +90,7 @@ Item {
     ListView {
         id: usersListView
         anchors.fill: parent
-        model: usersViewModel.users
+        model: root.model.users
         delegate: usersListDelegate
         highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
         highlightMoveDuration: 100
@@ -97,6 +99,6 @@ Item {
         ScrollBar.vertical: ScrollBar {}
         header: userListHeader
         headerPositioning: ListView.PullBackHeader
-        onCurrentIndexChanged: usersViewModel.currentUser = usersViewModel.users[currentIndex]
+        onCurrentIndexChanged: root.model.currentUser = root.model.users[currentIndex]
     }
 }
