@@ -2,30 +2,34 @@
 #define USERSVIEWMODEL_H
 
 #include "User.h"
+#include "UserViewModel.h"
 
 #include <QObject>
 #include <QSharedPointer>
+#include <QVariantList>
 
 class UsersViewModel : public QObject {
     Q_OBJECT
 
-//    Q_PROPERTY(QList<UserViewModel> users READ users WRITE setUsers NOTIFY usersChanged)
-//    Q_PROPERTY(UserViewModel currentUser READ currentUser WRITE setCurrentUser NOTIFY currentUserChanged)
-    Q_PROPERTY(QSharedPointer<User> user READ user WRITE setUser NOTIFY userChanged)
+	Q_PROPERTY(QVariantList users READ users NOTIFY usersChanged)
+	Q_PROPERTY(QVariant currentUser READ currentUser WRITE setCurrentUser NOTIFY currentUserChanged)
 
 public:
-    UsersViewModel();
+	UsersViewModel(QObject* parent = nullptr);
 
-    QSharedPointer<User> user() const;
+	QVariantList users() const;
+	QVariant currentUser() const;
 
 public slots:
-    void setUser(QSharedPointer<User> user);
+	void setCurrentUser(QVariant currentUser);
 
 signals:
-    void userChanged(QSharedPointer<User> user);
+	void usersChanged(QVariantList users);
+	void currentUserChanged(QVariant currentUser);
 
 private:
-    QSharedPointer<User> m_user;
+	UserViewModel* m_currentUser;
+	QVariantList m_users;
 };
 
 #endif // USERSVIEWMODEL_H

@@ -1,4 +1,6 @@
 import QtQuick 2.11
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtQuick.Window 2.11
 
 import MyTypes 1.0
@@ -11,84 +13,53 @@ Window {
 
     UsersViewModel {
         id: usersViewModel
+        onCurrentUserChanged: {
+            theLoader.item.model = currentUser
+        }
     }
 
-    Text {
+    ColumnLayout {
         anchors.fill: parent
-        text: usersViewModel.user.data().firstName()
+
+        UsersList {
+            Layout.fillWidth: true
+            Layout.preferredHeight: parent.height / 2
+            usersViewModel: usersViewModel
+        }
+
+        Component {
+            id: userView
+
+            Item {
+                id: root
+                property UserViewModel model: null
+
+                Rectangle {
+//                    anchors.fill: parent
+                    anchors.centerIn: parent
+                    width: 400
+                    height: 200
+
+                    GridLayout {
+                        columns: 2
+
+                        Text { Layout.preferredHeight: 40; Layout.preferredWidth: 100; text: "Firstname:" }
+                        Text { Layout.preferredHeight: 40; Layout.preferredWidth: 100; text: root.model.firstName }
+                        Text { Layout.preferredHeight: 40; Layout.preferredWidth: 100; text: "Lastname:" }
+                        Text { Layout.preferredHeight: 40; Layout.preferredWidth: 100; text: root.model.lastName }
+                        Text { Layout.preferredHeight: 40; Layout.preferredWidth: 100; text: "Age:" }
+                        Text { Layout.preferredHeight: 40; Layout.preferredWidth: 100; text: root.model.age }
+                    }
+                }
+            }
+        }
+
+        Loader {
+            id: theLoader
+            Layout.fillHeight: true
+            sourceComponent: userView
+            Layout.fillWidth: true
+            Layout.preferredHeight: parent.height / 2
+        }
     }
-
-//    ListView {
-//        anchors.fill: parent
-//        model: ["123", "qwe", "asd", "zxc"]
-//        delegate: Text {
-//            color: ListView.isCurrentItem ? "red" : "black"
-//            text: modelData
-//            MouseArea {
-//                anchors.fill: parent
-//                onClicked: parent.ListView.view.currentIndex = index
-//            }
-//        }
-//        focus: true
-//    }
-
-//    // Define a delegate component.  A component will be
-//    // instantiated for each visible item in the list.
-//    Component {
-//        id: petDelegate
-//        Item {
-//            id: wrapper
-//            width: 200; height: 55
-//            Column {
-//                Text { text: 'Name: ' + name }
-//                Text { text: 'Type: ' + type }
-//                Text { text: 'Age: ' + age }
-//            }
-//            // indent the item if it is the current item
-//            states: State {
-//                name: "Current"
-//                when: wrapper.ListView.isCurrentItem
-//                PropertyChanges { target: wrapper; x: 20 }
-//            }
-//            transitions: Transition {
-//                NumberAnimation { properties: "x"; duration: 200 }
-//            }
-//            MouseArea {
-//                anchors.fill: parent
-//                onClicked: wrapper.ListView.view.currentIndex = index
-//            }
-//        }
-//    }
-
-//    // Define a highlight with customized movement between items.
-//    Component {
-//        id: highlightBar
-//        Rectangle {
-//            width: 200; height: 50
-//            color: "#FFFF88"
-//            y: listView.currentItem.y;
-//            Behavior on y { SpringAnimation { spring: 2; damping: 0.1 } }
-//        }
-//    }
-
-//    ListView {
-//        id: listView
-//        width: 200; height: parent.height
-//        x: 30
-
-//        model: ListModel {
-//            ListElement { name: "1"; type: "1"; age: 1 }
-//            ListElement { name: "2"; type: "2"; age: 2 }
-//            ListElement { name: "3"; type: "3"; age: 3 }
-//            ListElement { name: "4"; type: "4"; age: 4 }
-//        }
-
-//        delegate: petDelegate
-//        focus: true
-
-//        // Set the highlight delegate. Note we must also set highlightFollowsCurrentItem
-//        // to false so the highlight delegate can control how the highlight is moved.
-//        highlight: highlightBar
-//        highlightFollowsCurrentItem: false
-//    }
 }

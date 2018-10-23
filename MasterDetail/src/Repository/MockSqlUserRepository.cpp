@@ -2,7 +2,8 @@
 #include "UserFactory.h"
 
 MockSqlUserRepository::MockSqlUserRepository() {
-    fillDatabeseWithMocData();
+	for (int i = 0; i < 100; ++ i)
+		fillDatabeseWithMocData();
 }
 
 void MockSqlUserRepository::fillDatabeseWithMocData() {

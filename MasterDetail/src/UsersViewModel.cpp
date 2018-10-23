@@ -1,21 +1,31 @@
+#include <QSharedPointer>
+#include <QVariant>
 #include <QtDebug>
 
+#include "Repository/Repositories.h"
 #include "Repository/UserRepository.h"
 #include "UsersViewModel.h"
 
-UsersViewModel::UsersViewModel() {
-//    m_user = UserRepository::byId(0);
-    qDebug() << m_user->id() << m_user->firstName() << m_user->lastName() << m_user->age();
+UsersViewModel::UsersViewModel(QObject* parent) :
+	QObject(parent) {
 }
 
-QSharedPointer<User> UsersViewModel::user() const {
-    return m_user;
+QVariantList UsersViewModel::users() const {
+	QSharedPointer<UserRepository> repo = Repositories::userRepository();
+	QVariantList userVMs;
+	for (QSharedPointer<User> user : repo->allUsers())
+		userVMs.append(QVariant::fromValue(new UserViewModel(user, parent())));
+	return userVMs;
 }
 
-void UsersViewModel::setUser(QSharedPointer<User> user) {
-    if (m_user == user)
-        return;
+QVariant UsersViewModel::currentUser() const {
+	return QVariant::fromValue(m_currentUser);
+}
 
-    m_user = user;
-    emit userChanged(m_user);
+void UsersViewModel::setCurrentUser(QVariant currentUser) {
+	if (m_currentUser == currentUser.value<UserViewModel*>())
+		return;
+
+	m_currentUser = currentUser.value<UserViewModel*>();
+	emit currentUserChanged(QVariant::fromValue(m_currentUser));
 }

@@ -35,7 +35,9 @@ HEADERS += \
     include/UserFactory.h \
     include/Repository/SqlUserRepository.h \
     include/Repository/Repositories.h \
-    include/Repository/MockSqlUserRepository.h
+    include/Repository/MockSqlUserRepository.h \
+    include/Support/MethodTypes.h \
+    include/WrapperViewModel.h
 
 SOURCES += \
     src/User.cpp \

@@ -1,8 +1,6 @@
 #ifndef USER_H
 #define USER_H
 
-#include <QMetaType>
-#include <QSharedPointer>
 #include <QString>
 
 class User {
@@ -34,7 +32,5 @@ private:
 };
 
 bool operator ==(const User& u1, const User& u2);
-
-Q_DECLARE_METATYPE(QSharedPointer<User>)
 
 #endif // USER_H
