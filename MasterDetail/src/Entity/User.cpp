@@ -1,4 +1,4 @@
-#include "User.h"
+#include "Entity/User.h"
 
 User::User(int id, QString firstName, QString lastName, int age) :
     m_id(id),
@@ -8,7 +8,9 @@ User::User(int id, QString firstName, QString lastName, int age) :
 }
 
 bool User::isValid() const {
-    return m_id > 0;
+	return (m_id >= 0) &&
+		   (!m_firstName.isEmpty() || !m_lastName.isEmpty()) &&
+		   (m_age >= minAge() && m_age <= maxAge());
 }
 
 int User::id() const {

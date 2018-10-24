@@ -26,26 +26,28 @@ INCLUDEPATH += $$PWD/include
 RESOURCES += res/qml.qrc
 
 HEADERS += \
-    include/User.h \
-    include/Pet.h \
-    include/Repository/UserRepository.h \
-    include/UsersViewModel.h \
-    include/UserViewModel.h \
-    include/IdFactory.h \
-    include/UserFactory.h \
-    include/Repository/SqlUserRepository.h \
+    include/Entity/Order.h \
+    include/Entity/User.h \
+    include/Factory/UserFactory.h \
+    include/Repository/User/MockSqlUserRepository.h \
+    include/Repository/User/SqlUserRepository.h \
+    include/Repository/User/UserRepository.h \
     include/Repository/Repositories.h \
-    include/Repository/MockSqlUserRepository.h \
+    include/Support/IdFactory.h \
     include/Support/MethodTypes.h \
-    include/WrapperViewModel.h
+    include/ViewModel/UsersViewModel.h \
+    include/ViewModel/UserViewModel.h \
+    include/ViewModel/WrapperViewModel.h \
+    include/Entity/Product.h
 
 SOURCES += \
-    src/User.cpp \
-    src/Pet.cpp \
-    src/UsersViewModel.cpp \
-    src/UserViewModel.cpp \
-    src/IdFactory.cpp \
-    src/UserFactory.cpp \
-    src/Repository/SqlUserRepository.cpp \
+    src/Entity/Order.cpp \
+    src/Entity/User.cpp \
+    src/Factory/UserFactory.cpp \
+    src/Repository/User/MockSqlUserRepository.cpp \
+    src/Repository/User/SqlUserRepository.cpp \
     src/Repository/Repositories.cpp \
-    src/Repository/MockSqlUserRepository.cpp
+    src/Support/IdFactory.cpp \
+    src/ViewModel/UsersViewModel.cpp \
+    src/ViewModel/UserViewModel.cpp \
+    src/Entity/Product.cpp
